@@ -5,6 +5,8 @@ This is a relatively straightforward, customizable semantic chunker that uses a 
 
 The default values are tuned for informational/general text (window=6, threshold(cosine) =0.6, min chunk size=50chars, model=[MongoDB/mdbr-leaf-mt](https://huggingface.co/MongoDB/mdbr-leaf-mt))
 
+The server is designed to recieve fowarded requests (preferably behind a firewall), please add relevannt policies and protections/bypasses if you choose to host it publically as an api. I would personally reccomend looking into the classics: [OpenVPN](https://openvpn.net/) (if you have a tough firewall) and [nginx](https://nginx.org/) (for port forwarding) which have been working great for me.
+
 ## Setup
 A few things need to be done to run this correctly:
 >-Apart from downloading the requirments, you must also ***python -m spacy download en_core_web_sm*** which will download the nlp package needed for the sentencizer
