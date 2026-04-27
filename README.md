@@ -57,12 +57,13 @@ Which will allow you to create tables or append to tables with a name, regardles
 
 The server takes simple post requests with three fields:
 ```
-"text": str,
-"table":str, 
-"docid": str
+text: str
+table: str
+docid: str
+uid: str
 ```
 
-The docid is used to keep track of chunks in the same group, while text is the long string we need chunked. table lets us assign to a new or existing table.
+The docid is used to keep track of chunks in the same group, while text is the long string we need chunked. table lets us assign to a new or existing table (i recommend using the same one once created).
 On first request, it will download the default or requested model and store for later in the session. (~10 seconds)
 
 <img width="889" height="360" alt="1_1" src="https://github.com/user-attachments/assets/0f6f98e4-1ba3-4fd4-b07f-7ecdf6c85f3f" />
