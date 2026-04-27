@@ -15,6 +15,18 @@ def ensurerange(x):
     if x < 0.0 or x > 1.0:
         raise argparse.ArgumentTypeError(f"invalid threshold outside of range {x}")
     return x
+    
+def port_type(x):
+    try:
+        port = int(x)
+    except ValueError:
+        raise argparse.ArgumentTypeError(f"{x} is not int")
+    
+    if 1 <= port <= 65535:
+        return port
+    else:
+        raise argparse.ArgumentTypeError(f"Port {x} is out of range")
+        
 parser = argparse.ArgumentParser(description="Starts the Semantic Window Chunker server")
 parser.add_argument("--threshold", type=ensurerange, help="Threshold for semantic cutoff - float between 0 and 1. Default value 0.6.")
 parser.add_argument("--min_size", type=int, help="Integer count of minimum charachter count in a chunk.")
@@ -22,6 +34,7 @@ parser.add_argument("--w_size", type=int, help="Integer size of window for seman
 parser.add_argument("--url", type=str, help="Supabase url, obtained from .env file in directory if it exists.")
 parser.add_argument("--key", type=str, help="Supabase key, obtained from .env file in directory if it exists. A Secret/Service key is prefferable for this as it is a backend service but other keys can be arraged with proper row level security on supabase.")
 parser.add_argument("--model", type=str, help="Huggingface model. Default value MongoDB/mdbr-leaf-mt.")
+parser.add_argument("--port", type=port_type, help="Port Number. Default 8000")
 args = parser.parse_args()
 app = FastAPI();
 
@@ -34,6 +47,7 @@ class CReq(BaseModel):
     text: str
     table: str
     docid: str
+    uid: str
  
 @app.post("/process-text", status_code=status.HTTP_200_OK)
 async def process_text(request: CReq):
@@ -52,13 +66,16 @@ async def process_text(request: CReq):
         chunks = ingestDoc(*parg, **keyword_args)
         #chunks = ingestDoc(request.text, 50, 0.6)
         if args.url != None and args.key != None:
-            submit_chunks(request.table, chunks, request.docid, url, key)
+            submit_chunks(request.table, chunks, request.docid, request.uid, url, key)
         else:
-            submit_chunks(request.table, chunks, request.docid)
+            submit_chunks(request.table, chunks, request.docid, request.uid)
         return {"response": "ok"}
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 
 
 if __name__ == "__main__":
-    uvicorn.run(app, port=8000)
+    if args.port != None:
+        uvicorn.run(app, port=args.port)
+    else:
+        uvicorn.run(app, port=8000)

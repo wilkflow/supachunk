@@ -146,12 +146,13 @@ load_dotenv()
 supaurl = os.getenv('SUPAURL')
 supakey = os.getenv('SUPAKEY')
    
-def submit_chunks(bname, chunks, docid, curl=supaurl, ckey=supakey):
+def submit_chunks(bname, chunks, docid, uid, curl=supaurl, ckey=supakey):
     '''
     Very simple upload func, MAKE SURE TO HAVE CREATED SQL RPC FUNC ON DASHBOARD AND SET .ENV VARS SUPAURL AND SUPAKEY TO YOUR CREDENTIALS
-    bname: name of bin (string)
+    bname: name of table (string)
     chunks: [chunk(intact punctuation), embedding(from preprocessed chunk discared after encoding)] list 
     docid: string id for the chunk group/original doc on supabase 
+    uid: string id for user
     curl: supabase client url (string, set as env variable and then extract for best practice)
     ckey: supabase client key, same as above except its the key
     '''
@@ -163,7 +164,8 @@ def submit_chunks(bname, chunks, docid, curl=supaurl, ckey=supakey):
         data = {
             "chunk": c[0],
             "embedding": c[1].tolist(),
-            "did": docid
+            "did": docid,
+            "uid": uid
         }
         try:
             
