@@ -67,11 +67,14 @@ On first request, it will download the default or requested model and store for 
 
 Once a request is recieved, it logs the chunk uploads and ids in console, this can be piped if a file log is desired.
 
+
+
 <img width="1500" height="545" alt="1" src="https://github.com/user-attachments/assets/5ab4f81f-fd42-42e0-9bbb-308569b2dc86" />
 
-After, the chunks can be found at whatever table was sepcified in the request.
+After, the chunks can be found at whatever table was sepcified in the request. Response OK will be sent to source of post request.
 
 
+As seen below, the uvicorn process can be killed at any point and when exiting console. [PM2](https://pm2.io/blog/2018/09/19/Manage-Python-Processes) can be used if you want to run as background process.
 
 <img width="663" height="294" alt="t8w8" src="https://github.com/user-attachments/assets/e54ade78-1780-43ae-84e0-99de16243566" />
 
@@ -109,4 +112,18 @@ def submit_chunks(bname, chunks, docid, uid, curl=supaurl, ckey=supakey):
     ckey: supabase client key, same as above except its the key
     '''
 ```
-Of these, it is recommended to import ingestDoc and subit_chunks for use, as semChunker is called by ingestDoc
+Of these, it is recommended to import ingestDoc and subit_chunks for use, as semChunker is called by ingestDoc, anyways, but semChunker has the bigger half of the window algorithm if you feel you need to tweak it.
+
+## See supatester.py for a very simple demonstration of a call
+
+Sample input can be found in tkl.txt
+
+Sample output:
+
+<img width="356" height="55" alt="sample" src="https://github.com/user-attachments/assets/3f0dd4e2-bf06-4833-a656-65abfad59194" />
+
+
+____________________________________________________________________________________________________
+end
+
+
