@@ -1,7 +1,7 @@
 # supachunk
 A semantic chunker server that generates [supabase](https://supabase.com/) tables
 
-This is a relatively straightforward, customizable semantic chunker that uses a shrinking window approach as well as some semantic reassembly as needed to reach desired chunk size. It can be used on its own (winchunker.py) or ran as a FastAPI server (supachunk.py). 
+This is a relatively straightforward, customizable semantic chunker that uses a shrinking sliding window approach as well as some semantic reassembly as needed to reach desired chunk size. It can be used on its own (winchunker.py) or ran as a FastAPI server (supachunk.py). 
 
 The default values are tuned for informational/general text (window=6, threshold(cosine) =0.6, min chunk size=50chars, model=[MongoDB/mdbr-leaf-mt](https://huggingface.co/MongoDB/mdbr-leaf-mt))
 
