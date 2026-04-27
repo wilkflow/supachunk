@@ -7,6 +7,8 @@ The default values are tuned for informational/general text (window=6, threshold
 
 The server is designed to recieve fowarded requests (preferably behind a firewall), please add relevannt policies and protections/bypasses if you choose to host it publically as an api. I would personally reccomend looking into the classics: [OpenVPN](https://openvpn.net/) (if you have a tough firewall) and [nginx](https://nginx.org/) (for port forwarding) which have been working great for me.
 
+*NOTE: IF USING DIFFERENT MODELS MAKE SURE EMBEDDING DIMENSIONS MATCH*
+
 ## Setup
 A few things need to be done to run this correctly:
 >-Apart from downloading the requirments, you must also ***python -m spacy download en_core_web_sm*** which will download the nlp package needed for the sentencizer
